@@ -6,10 +6,28 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  // output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model users {
+  id             String @id @default(uuid())
+  username       String @unique
+  salt           String?
+  hashedpassword String?
+  email          String? @unique
+  email_verified Int?
+  federated_credentials federated_credentials[]
+}
+
+model federated_credentials {
+  id       String @id @default(uuid())
+  user     users  @relation(fields: [user_id], references: [id])
+  user_id  String
+  provider String?
+  subject  String?
 }
