@@ -8,7 +8,6 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 dotenv.config();
 
-// The rest of your app code (import express, etc.) goes here...
 const app = express();
 const port = 3000;
 app.use(morgan("dev"));
