@@ -23,24 +23,25 @@ app.use(
 		// store: new SQLiteStore({ db: "sessions.db", dir: "./var/db" }),
 	})
 );
-// console.log("START");
-// console.log(process.env["DATABASE_URL"]);
-// console.log(process.env.DATABASE_URL);
-// console.log(process.env.GOOGLE_CLIENT_ID);
+type userType = {
+	id: string;
+	username: string;
+	name: string;
+};
 
 app.use(passport.authenticate("session"));
 
-// passport.serializeUser(function (user, cb) {
-// 	process.nextTick(function () {
-// 		cb(null, { id: user.id, username: user.username, name: user.name });
-// 	});
-// });
+passport.serializeUser(function (user: userType, cb) {
+	process.nextTick(function () {
+		cb(null, { id: user.id, username: user.username, name: user.name });
+	});
+});
 
-// passport.deserializeUser(function (user, cb) {
-// 	process.nextTick(function () {
-// 		return cb(null, user);
-// 	});
-// });
+passport.deserializeUser(function (user: userType, cb) {
+	process.nextTick(function () {
+		return cb(null, user);
+	});
+});
 
 app.use("/", authRouter);
 
